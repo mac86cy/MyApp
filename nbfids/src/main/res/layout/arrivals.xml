@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="#636363"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/arrTitle"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:background="#3B3B55"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="@string/flt"
+            android:textColor="@color/white"
+            android:textSize="@dimen/itemTextSize"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="@string/org"
+            android:textColor="@color/white"
+            android:textSize="@dimen/itemTextSize"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/sta"
+            android:textColor="@color/white"
+            android:textSize="@dimen/itemTextSize"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/tdt"
+            android:textColor="@color/white"
+            android:textSize="@dimen/itemTextSize"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/std"
+            android:textColor="@color/white"
+            android:textSize="@dimen/itemTextSize"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/abt"
+            android:textColor="@color/white"
+            android:textSize="@dimen/itemTextSize"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="@string/status"
+            android:textColor="@color/white"
+            android:textSize="@dimen/itemTextSize"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/arrival_list"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="30"
+        android:scrollbars="none">
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_gravity="center"
+        android:layout_weight="2"
+        android:background="#3B3B55"
+        android:gravity="bottom">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/kmia"
+            android:textColor="@color/gold"
+            android:textSize="@dimen/infoTextSize"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,127 @@
+package com.kmia.nbfids.dao;
+
+import com.kmia.nbfids.model.basic.Locations;
+import com.kmia.nbfids.utils.Constants;
+
+import org.xutils.DbManager;
+import org.xutils.ex.DbException;
+import org.xutils.x;
+
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by mac86cy on 15/11/14.
+ */
+public class LocationsDao {
+    DbManager.DaoConfig daoConfig = new DbManager.DaoConfig()
+            .setDbName(Constants.DBNAME)
+            .setDbVersion(1);
+
+    DbManager db = x.getDb(daoConfig);
+
+    public Locations getLocationByIataCode(String iataCode) {
+        Locations location = new Locations();
+        try {
+            location = db.selector(Locations.class).where("fiataCode", "=", iataCode).findFirst();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return location;
+    }
+
+    /**
+     * @param fid 根据fid
+     * @return 返回记录
+     */
+    public Locations getLocationById(String fid) {
+        Locations location = new Locations();
+        try {
+            location = db.selector(Locations.class).where("fid", "=", fid).findFirst();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return location;
+    }
+
+    /**
+     * 增加一条记录
+     *
+     * @param location
+     */
+    public void addLocation(Locations location) {
+        try {
+            db.save(location);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 批量增加记录
+     *
+     * @param locations
+     */
+    public void addLocations(List<Locations> locations) {
+        try {
+            db.save(locations);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param id 根据id删除一条记录
+     */
+    public void delLocation(int id) {
+        try {
+            db.deleteById(Locations.class, id);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 清空表
+     */
+    public void clearLocations() {
+        try {
+            db.delete(Locations.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * @param location 更新Locations这条记录
+     */
+    public void updateLocation(Locations location) {
+        if (location != null) {
+            delLocation(getLocationById(location.getFid()).getId());
+            addLocation(location);
+        }
+    }
+
+    /**
+     * @param locations 更新Location所有记录
+     */
+    public void updateLocations(List<Locations> locations) {
+        if (locations.size() > 0 && locations != null) {
+            clearLocations();
+            addLocations(locations);
+        }
+    }
+
+    /**
+     * @return 显示表所有记录
+     */
+    public List<Locations> listLocation() {
+        List<Locations> list = new ArrayList<Locations>();
+        try {
+            list = db.selector(Locations.class).findAll();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+}

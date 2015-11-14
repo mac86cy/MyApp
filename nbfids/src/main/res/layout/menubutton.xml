@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/mb1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:background="@drawable/shape">
+
+        <com.kmia.nbfids.view.MyImageButton
+            android:id="@+id/change_page"
+            android:layout_width="200dip"
+            android:layout_height="50dip"
+            android:background="@drawable/shape"
+            android:src="@drawable/menustyle"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mb2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dip"
+        android:background="@drawable/shape">
+
+        <com.kmia.nbfids.view.MyImageButton
+            android:id="@+id/update_base"
+            android:layout_width="200dip"
+            android:layout_height="50dip"
+            android:background="@drawable/shape"
+            android:src="@drawable/menustyle"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mb3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape">
+
+        <com.kmia.nbfids.view.MyImageButton
+            android:id="@+id/update_flights"
+            android:layout_width="200dip"
+            android:layout_height="50dip"
+            android:background="@drawable/shape"
+            android:src="@drawable/menustyle"/>
+    </LinearLayout>
+
+</LinearLayout>

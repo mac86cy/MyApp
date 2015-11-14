@@ -1,0 +1,31 @@
+<resources>
+    <string name="app_name">网络航显</string>
+    <string name="flt">航班</string>
+    <string name="des">到达</string>
+    <string name="org">始发</string>
+    <string name="std">计划起飞</string>
+    <string name="stp">计划起飞</string>
+    <!-- 前站 -->
+    <string name="abt">实际起飞</string>
+    <string name="abp">实际起飞</string>
+    <!-- 前站 -->
+
+    <string name="sta">计划到达</string>
+    <string name="stn">计划到达</string>
+    <!-- 下站 -->
+    <string name="tdt">实际到达</string>
+    <string name="aan">实际到达</string>
+    <!-- 下站 -->
+    <string name="status">状态</string>
+    <string name="welcome">欢迎页面</string>
+
+    <!-- 目录 -->
+    <string name="chgPage">切换页面</string>
+    <string name="updateFlights">更新航班数据</string>
+    <string name="updateBase">更新基础数据</string>
+    <string name="quit">退出</string>
+    <string name="imgbutton">按钮</string>
+
+
+    <string name="kmia">昆明长水国际机场欢迎您</string>
+</resources>
