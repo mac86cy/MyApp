@@ -6,9 +6,17 @@ import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.widget.ImageButton;
-
 /**
- * Created by mac86cy on 15/11/14.
+ *  * Copyright 2015 KMIA. All rights reserved. 
+ *  *
+ *  * 作者 ：mac86cy
+ *  *
+ *  * 邮箱 ：mac86cy@163.com
+ *  *
+ *  * 创建时间：2015/11/15 17:57
+ *  *
+ *  * 类说明：自定义ImageButton类，用于在ImageButton上显示文字
+ *  
  */
 public class MyImageButton extends ImageButton {
     private String _text = "";

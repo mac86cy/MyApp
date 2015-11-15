@@ -23,7 +23,6 @@ import com.kmia.nbfids.utils.TranslateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
-
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -31,9 +30,9 @@ import java.util.List;
  *  *
  *  * 邮箱 ：mac86cy@163.com
  *  *
- *  * 创建时间：2015 17:50
+ *  * 创建时间：2015/11/15 17:57
  *  *
- *  * 类说明：
+ *  * 类说明：离港航班页面数据适配器
  *  
  */
 public class DeparturesAdapter extends BaseAdapter {

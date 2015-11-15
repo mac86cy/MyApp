@@ -30,12 +30,11 @@ import java.util.List;
  *  *
  *  * 邮箱 ：mac86cy@163.com
  *  *
- *  * 创建时间：2015 17:50
+ *  * 创建时间：2015/11/15 17:57
  *  *
- *  * 类说明：
+ *  * 类说明：到港航班页面数据适配器
  *  
  */
-
 public class ArrivalsAdapter extends BaseAdapter {
     private static int CN_OR_EN = 0; // 中英文标志位
     private LayoutInflater mInflater;

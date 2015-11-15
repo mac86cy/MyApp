@@ -1,7 +1,15 @@
 package com.kmia.nbfids.utils;
-
 /**
- * Created by mac86cy on 15/11/14.
+ *  * Copyright 2015 KMIA. All rights reserved. 
+ *  *
+ *  * 作者 ：mac86cy
+ *  *
+ *  * 邮箱 ：mac86cy@163.com
+ *  *
+ *  * 创建时间：2015/11/15 17:57
+ *  *
+ *  * 类说明：全局静态变量
+ *  
  */
 public class Constants {
     public static final String SERVER_IP = "192.168.1.26";// 服务器ip

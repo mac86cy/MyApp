@@ -16,9 +16,9 @@ import java.util.Timer;
  *  *
  *  * 邮箱 ：mac86cy@163.com
  *  *
- *  * 创建时间：2015 17:50
+ *  * 创建时间：2015/11/15 17:57
  *  *
- *  * 类说明：
+ *  * 类说明：系统后台数据更新和清理服务
  *  
  */
 public class UpdateService extends Service {

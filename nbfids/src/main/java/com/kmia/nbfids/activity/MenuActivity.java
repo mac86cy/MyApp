@@ -26,9 +26,9 @@ import org.xutils.view.annotation.ViewInject;
  *  *
  *  * 邮箱 ：mac86cy@163.com
  *  *
- *  * 创建时间：2015 17:50
+ *  * 创建时间：2015/11/15 17:57
  *  *
- *  * 类说明：
+ *  * 类说明：menu菜单，用于显示，和响应遥控器menu按键
  *  
  */
 @ContentView(R.layout.menubutton)

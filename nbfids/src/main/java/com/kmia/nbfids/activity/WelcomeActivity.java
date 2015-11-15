@@ -16,9 +16,9 @@ import com.kmia.nbfids.R;
  *  *
  *  * 邮箱 ：mac86cy@163.com
  *  *
- *  * 创建时间：2015 17:50
+ *  * 创建时间：2015/11/15 17:57
  *  *
- *  * 类说明：
+ *  * 类说明：欢迎页面
  *  
  */
 public class WelcomeActivity extends Activity {

@@ -4,9 +4,17 @@ import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
 import java.util.Date;
-
 /**
- * Created by mac86cy on 15/11/14.
+ *  * Copyright 2015 KMIA. All rights reserved. 
+ *  *
+ *  * 作者 ：mac86cy
+ *  *
+ *  * 邮箱 ：mac86cy@163.com
+ *  *
+ *  * 创建时间：2015/11/15 17:57
+ *  *
+ *  * 类说明：离港航班表
+ *  
  */
 @Table(name = "DEPARTURES")
 public class Departures {
