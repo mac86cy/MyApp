@@ -9,7 +9,18 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.kmia.nbfids.R;
-
+/**
+ *  * Copyright 2015 KMIA. All rights reserved. 
+ *  *
+ *  * 作者 ：mac86cy
+ *  *
+ *  * 邮箱 ：mac86cy@163.com
+ *  *
+ *  * 创建时间：2015 17:50
+ *  *
+ *  * 类说明：
+ *  
+ */
 public class WelcomeActivity extends Activity {
 
     private Handler mHandler;

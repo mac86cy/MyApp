@@ -21,7 +21,18 @@ import com.kmia.nbfids.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ *  * Copyright 2015 KMIA. All rights reserved. 
+ *  *
+ *  * 作者 ：mac86cy
+ *  *
+ *  * 邮箱 ：mac86cy@163.com
+ *  *
+ *  * 创建时间：2015 17:50
+ *  *
+ *  * 类说明：
+ *  
+ */
 public class ArrivalsActivity extends Activity {
 
     public static ArrivalsActivity instance = null;
