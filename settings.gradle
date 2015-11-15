@@ -1,1 +1,1 @@
-include ':app', ':nbfids'
+include ':app', ':nbfids', ':xutils-3.0-sources'
