@@ -138,8 +138,7 @@ public class ArrivalsActivity extends Activity {
     private void initView() {
         ListView lv = (ListView) findViewById(R.id.arrival_list);
         dao = new ArrivalsDao();
-        adapter = new ArrivalsAdapter(this);// 初始化数据适配器
-        adapter.init(dao.listArrivals(), getScreenHeight());// 给适配器传入数据
+        adapter = new ArrivalsAdapter(this, dao.listArrivals(), getScreenHeight());// 初始化数据适配器
         lv.setAdapter(adapter);
     }
 

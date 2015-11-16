@@ -40,22 +40,18 @@ import java.util.List;
 public class DeparturesAdapter extends BaseAdapter {
     private static int CN_OR_EN = 0; // 中英文标志位
     private LayoutInflater mInflater;
-    private List<Departures> list;
+    private List<Departures> list = new ArrayList<>();
     private LocationsDao locationsDao;// 地名数据源
     private FlightStatusDao statusDao;// 状态数据源
     private int screenHeight;// 屏幕高度
 
-    public DeparturesAdapter(Context context) {
+    public DeparturesAdapter(Context context, List<Departures> list, int height) {
         super();
+        this.list = list;
+        this.screenHeight = height;
         locationsDao = new LocationsDao();
         statusDao = new FlightStatusDao();
         mInflater = LayoutInflater.from(context);
-        this.list = new ArrayList<>();
-    }
-
-    public void init(List<Departures> list, int height) {
-        this.list = list;
-        this.screenHeight = height;
     }
 
     public void update(List<Departures> list, int language) {
