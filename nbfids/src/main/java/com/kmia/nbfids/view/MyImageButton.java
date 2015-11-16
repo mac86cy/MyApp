@@ -1,11 +1,13 @@
 package com.kmia.nbfids.view;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
 import android.util.AttributeSet;
 import android.widget.ImageButton;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -42,7 +44,7 @@ public class MyImageButton extends ImageButton {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        Paint paint = new Paint();
+        @SuppressLint("DrawAllocation") Paint paint = new Paint();
         paint.setTextAlign(Align.CENTER);
         paint.setColor(_color);
         paint.setTextSize(_textsize);

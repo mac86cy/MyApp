@@ -9,6 +9,7 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -57,9 +58,7 @@ public class FlightStatusDao {
     }
 
     /**
-     * 增加一条记录
-     *
-     * @param status
+     * @param status 增加一条记录
      */
     public void addStatus(FlightStatus status) {
         try {
@@ -70,9 +69,7 @@ public class FlightStatusDao {
     }
 
     /**
-     * 批量增加记录
-     *
-     * @param status
+     * @param status 批量增加记录
      */
     public void addStatuss(List<FlightStatus> status) {
         try {
@@ -118,7 +115,7 @@ public class FlightStatusDao {
      * @param status 更新status所有记录
      */
     public void updateStatuss(List<FlightStatus> status) {
-        if (status.size() > 0 && status != null) {
+        if (status != null && status.size() > 0) {
             clearStatuss();
             addStatuss(status);
         }
@@ -128,7 +125,7 @@ public class FlightStatusDao {
      * @return 显示表所有记录
      */
     public List<FlightStatus> listStatus() {
-        List<FlightStatus> list = new ArrayList<FlightStatus>();
+        List<FlightStatus> list = new ArrayList<>();
         try {
             list = db.selector(FlightStatus.class).findAll();
         } catch (DbException e) {

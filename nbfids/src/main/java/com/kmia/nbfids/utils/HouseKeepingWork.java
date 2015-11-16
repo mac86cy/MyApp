@@ -1,5 +1,6 @@
 package com.kmia.nbfids.utils;
 
+import android.annotation.SuppressLint;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -8,6 +9,7 @@ import com.kmia.nbfids.dao.ArrivalsDao;
 import com.kmia.nbfids.dao.DeparturesDao;
 
 import java.util.TimerTask;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -23,6 +25,7 @@ import java.util.TimerTask;
 public class HouseKeepingWork extends TimerTask {
     private ArrivalsDao arrivalsDao;
     private DeparturesDao departuresDao;
+    @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

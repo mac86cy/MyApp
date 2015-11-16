@@ -9,6 +9,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.kmia.nbfids.R;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -23,16 +24,13 @@ import com.kmia.nbfids.R;
  */
 public class WelcomeActivity extends Activity {
 
-    private Handler mHandler;
-    private Window window;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fullScreenDisplay();// 全屏显示
         setContentView(R.layout.activity_welcome);
         startService();
-        mHandler = new Handler();
+        Handler mHandler = new Handler();
         mHandler.postDelayed(new Runnable() {
             public void run() {
                 goMain();
@@ -52,7 +50,7 @@ public class WelcomeActivity extends Activity {
      * 全屏显示
      */
     private void fullScreenDisplay() {
-        window = getWindow();
+        Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
         params.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION; // 全屏显示，不显示虚拟按键
         window.setAttributes(params);

@@ -21,7 +21,6 @@ public class Constants {
     public static final String UPDATE_ACTION = "com.kmia.nbfids.update";//数据更新发送广播的action
     public static final String DBNAME = "nbfids.db";//数据库名称
     public static final int ROWS = 10; // 每页显示行数
-    public static final int TITLEHEIGHT = 110;// 标题栏高度
     public static final int INTERVAL = 10;// 时间间隔，每页显示多少秒
     public static final int TIME_QUANTUM = 4;//显示多久的航班，单位：小时
 }

@@ -1,7 +1,9 @@
 package com.kmia.nbfids.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -18,6 +20,7 @@ public class SharePreference {
     private SharedPreferences sp;
     private SharedPreferences.Editor editor;
 
+    @SuppressLint("CommitPrefEdits")
     public SharePreference(Context context, String file) {
         super();
         this.sp = context.getSharedPreferences(file, Context.MODE_PRIVATE);
@@ -25,9 +28,7 @@ public class SharePreference {
     }
 
     /**
-     * 判断是否第一次登陆
-     *
-     * @return
+     * @return 判断是否第一次登陆
      */
     public boolean getisFirst() {
         return sp.getBoolean("isFirst", true);

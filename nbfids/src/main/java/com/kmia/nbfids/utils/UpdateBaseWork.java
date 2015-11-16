@@ -1,11 +1,13 @@
 package com.kmia.nbfids.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
 import java.util.TimerTask;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -21,6 +23,7 @@ import java.util.TimerTask;
 public class UpdateBaseWork extends TimerTask {
     private Context context;
     private SharePreference util;
+    @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {

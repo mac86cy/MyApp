@@ -9,6 +9,7 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -53,9 +54,7 @@ public class LocationsDao {
     }
 
     /**
-     * 增加一条记录
-     *
-     * @param location
+     * @param location 增加一条记录
      */
     public void addLocation(Locations location) {
         try {
@@ -66,9 +65,7 @@ public class LocationsDao {
     }
 
     /**
-     * 批量增加记录
-     *
-     * @param locations
+     * @param locations 批量增加记录
      */
     public void addLocations(List<Locations> locations) {
         try {
@@ -114,7 +111,7 @@ public class LocationsDao {
      * @param locations 更新Location所有记录
      */
     public void updateLocations(List<Locations> locations) {
-        if (locations.size() > 0 && locations != null) {
+        if (locations != null && locations.size() > 0) {
             clearLocations();
             addLocations(locations);
         }
@@ -124,7 +121,7 @@ public class LocationsDao {
      * @return 显示表所有记录
      */
     public List<Locations> listLocation() {
-        List<Locations> list = new ArrayList<Locations>();
+        List<Locations> list = new ArrayList<>();
         try {
             list = db.selector(Locations.class).findAll();
         } catch (DbException e) {

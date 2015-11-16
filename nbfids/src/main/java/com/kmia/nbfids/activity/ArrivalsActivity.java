@@ -1,5 +1,6 @@
 package com.kmia.nbfids.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -36,17 +37,17 @@ import java.util.List;
 public class ArrivalsActivity extends Activity {
 
     public static ArrivalsActivity instance = null;
-    private ListView lv; // listView，用于显示航班
     private ArrivalsAdapter adapter;// 数据适配器，用于填充数据
     /**
      * 主UI线程代理，用来监听msg，获取消息更新主线程UI
      */
+    @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
         @SuppressWarnings("unchecked")
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            List<Arrivals> data = new ArrayList<Arrivals>();
+            List<Arrivals> data;
             switch (msg.what) {
                 case 0:
                     data = (List<Arrivals>) msg.obj;
@@ -60,9 +61,8 @@ public class ArrivalsActivity extends Activity {
     private ArrivalsDao dao;// 数据接口
     private Handler handler;
     private Runnable runnable;
-    private Window window;
-    private List<Arrivals> list = new ArrayList<Arrivals>();// 每次从数据接口取来的list，即N小时内的航班
-    private List<Arrivals> subList = new ArrayList<Arrivals>();// list的子list，用于将list切割为每页所显示的数据
+    private List<Arrivals> list = new ArrayList<>();// 每次从数据接口取来的list，即N小时内的航班
+    private List<Arrivals> subList = new ArrayList<>();// list的子list，用于将list切割为每页所显示的数据
     private int listSize = 0;// list的大小，list.size()
     private int pageSize = 0;// 页面数量，listsize/rows，如果有余数+1
     private Thread thread;// 子线程，用于循环翻页
@@ -128,7 +128,7 @@ public class ArrivalsActivity extends Activity {
      * 初始化页面
      */
     private void initView() {
-        lv = (ListView) findViewById(R.id.arrival_list);
+        ListView lv = (ListView) findViewById(R.id.arrival_list);
         dao = new ArrivalsDao();
         adapter = new ArrivalsAdapter(this);// 初始化数据适配器
         adapter.init(dao.listArrivals(), getScreenHeight());// 给适配器传入数据
@@ -155,7 +155,7 @@ public class ArrivalsActivity extends Activity {
      * View.SYSTEM_UI_FLAG_HIDE_NAVIGATION 隐藏导航栏，即虚拟按键
      */
     private void fullScreenDisplay() {
-        window = getWindow();
+        Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
         params.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION; // 全屏显示，不显示虚拟按键

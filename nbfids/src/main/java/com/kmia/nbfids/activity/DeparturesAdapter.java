@@ -1,5 +1,6 @@
 package com.kmia.nbfids.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -23,6 +24,7 @@ import com.kmia.nbfids.utils.TranslateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -38,11 +40,9 @@ import java.util.List;
 public class DeparturesAdapter extends BaseAdapter {
     private static int CN_OR_EN = 0; // 中英文标志位
     private LayoutInflater mInflater;
-    private List<Departures> list = new ArrayList<Departures>();
+    private List<Departures> list;
     private LocationsDao locationsDao;// 地名数据源
     private FlightStatusDao statusDao;// 状态数据源
-    private Locations location;// 地名
-    private FlightStatus fstatus;// 状态
     private int screenHeight;// 屏幕高度
 
     public DeparturesAdapter(Context context) {
@@ -50,22 +50,26 @@ public class DeparturesAdapter extends BaseAdapter {
         locationsDao = new LocationsDao();
         statusDao = new FlightStatusDao();
         mInflater = LayoutInflater.from(context);
+        this.list = new ArrayList<>();
     }
 
     public void init(List<Departures> list, int height) {
-        this.list = list;
+        if (this.list != null) {
+            this.list.clear();
+            this.list.addAll(list);
+        } else {
+            this.list = list;
+        }
         this.screenHeight = height;
     }
 
     public void update(List<Departures> list, int language) {
         CN_OR_EN = language;
-        this.list = list;
-        notifyDataSetChanged();
-    }
-
-    public void clear() {
         if (this.list != null) {
             this.list.clear();
+            this.list.addAll(list);
+        } else {
+            this.list = list;
         }
         notifyDataSetChanged();
     }
@@ -88,6 +92,7 @@ public class DeparturesAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint({"ViewHolder", "InflateParams"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         String desName = "";
@@ -104,8 +109,8 @@ public class DeparturesAdapter extends BaseAdapter {
         TextView aan = (TextView) convertView.findViewById(R.id.aan);// 下站实际到港
         TextView status = (TextView) convertView.findViewById(R.id.dstatus);// 状态
 
-        fstatus = statusDao.getStatusByCode(ffsa);
-        location = locationsDao.getLocationByIataCode(fdes);
+        FlightStatus fstatus = statusDao.getStatusByCode(ffsa);
+        Locations location = locationsDao.getLocationByIataCode(fdes);
 
         if (CN_OR_EN != 1) {// 中文
             if (location != null) {

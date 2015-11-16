@@ -1,5 +1,6 @@
 package com.kmia.nbfids.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -18,7 +19,6 @@ import com.kmia.nbfids.dao.DeparturesDao;
 import com.kmia.nbfids.model.Departures;
 import com.kmia.nbfids.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
@@ -35,17 +35,17 @@ import java.util.List;
 public class DeparturesActivity extends Activity {
 
     public static DeparturesActivity instance = null;
-    private ListView lv;// listView，用于显示航班
     private DeparturesAdapter adapter;// 数据适配器，用于填充数据
     /**
      * 主UI线程代理，用来监听msg，获取消息更新主线程UI
      */
+    @SuppressLint("HandlerLeak")
     Handler mHandler = new Handler() {
         @SuppressWarnings("unchecked")
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            List<Departures> data = new ArrayList<Departures>();
+            List<Departures> data;
             switch (msg.what) {
                 case 0:
                     data = (List<Departures>) msg.obj;
@@ -59,7 +59,6 @@ public class DeparturesActivity extends Activity {
     private DeparturesDao dao;// 数据接口
     private Handler handler;
     private Runnable runnable;
-    private Window window;
     private List<Departures> list;// 每次从数据接口取来的list，即N小时内的航班
     private List<Departures> subList;// list的子list，用于将list切割为每页所显示的数据
     private int listSize = 0;// list的大小，list.size()
@@ -127,7 +126,7 @@ public class DeparturesActivity extends Activity {
      * 初始化页面
      */
     private void initView() {
-        lv = (ListView) findViewById(R.id.departure_list);
+        ListView lv = (ListView) findViewById(R.id.departure_list);
         dao = new DeparturesDao();
         adapter = new DeparturesAdapter(this);// 初始化数据适配器
         adapter.init(dao.listDepartures(), getScreenHeight());// 给适配器传入数据
@@ -154,7 +153,7 @@ public class DeparturesActivity extends Activity {
      * View.SYSTEM_UI_FLAG_HIDE_NAVIGATION 隐藏导航栏，即虚拟按键
      */
     private void fullScreenDisplay() {
-        window = getWindow();
+        Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
         params.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION; // 全屏显示，不显示虚拟按键

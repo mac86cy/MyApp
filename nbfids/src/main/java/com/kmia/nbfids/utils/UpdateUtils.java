@@ -1,5 +1,6 @@
 package com.kmia.nbfids.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
@@ -28,6 +29,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -57,71 +59,76 @@ public class UpdateUtils {
                     for (int i = 0; i < arr.length(); i++) {
                         JSONObject temp = (JSONObject) arr.get(i);
                         String tn = temp.optString("tableName");
-                        if (tn.equals("airlines")) {
-                            List<Airlines> airlineList = new ArrayList<Airlines>();
-                            JSONArray airlines = temp.getJSONArray("content");
-                            for (int j = 0; j < airlines.length(); j++) {
-                                JSONObject t = (JSONObject) airlines.get(j);
-                                Airlines airline = new Airlines();
-                                airline.setFid(t.optString("fid"));
-                                airline.setFiataCode(t.optString("fiataCode"));
-                                airline.setFicaoCode(t.optString("ficaoCode"));
-                                airline.setFname(t.optString("fname"));
-                                airline.setFhandlineAgent(t.optString("fhandlineAgent"));
-                                airline.setFdescription(t.optString("fdescription"));
-                                airline.setFpubDspCode(t.optString("fpubDspCode"));
-                                airlineList.add(airline);
-                            }
-                            AirlinesDao airlinesDao = new AirlinesDao();
-                            airlinesDao.updateAirlines(airlineList);
-                        } else if (tn.equals("status")) {
-                            List<FlightStatus> statusList = new ArrayList<FlightStatus>();
-                            JSONArray status = temp.getJSONArray("content");
-                            for (int j = 0; j < status.length(); j++) {
-                                JSONObject t = (JSONObject) status.get(j);
-                                FlightStatus flightStatus = new FlightStatus();
-                                flightStatus.setFid(t.optString("fid"));
-                                flightStatus.setFstatus(t.optString("fstatus"));
-                                flightStatus.setFaod(t.optString("faod"));
-                                flightStatus.setFpriority(t.optInt("fpriority"));
-                                flightStatus.setFdescription(t.optString("fdescription"));
-                                statusList.add(flightStatus);
-                            }
-                            FlightStatusDao flightStatusDao = new FlightStatusDao();
-                            flightStatusDao.updateStatuss(statusList);
-                        } else if (tn.equals("locations")) {
-                            List<Locations> locationsList = new ArrayList<Locations>();
-                            JSONArray locations = temp.getJSONArray("content");
-                            for (int j = 0; j < locations.length(); j++) {
-                                JSONObject t = (JSONObject) locations.get(j);
-                                Locations location = new Locations();
-                                location.setFid(t.optString("fid"));
-                                location.setFiataCode(t.optString("fiataCode"));
-                                location.setFicaoCode(t.optString("ficaoCode"));
-                                location.setFname(t.optString("fname"));
-                                location.setFdescription(t.optString("fdescription"));
-                                location.setFabbc(t.optString("fabbc"));
-                                location.setFcountrySymbol(t.optString("fcountrySymbol"));
-                                locationsList.add(location);
-                            }
-                            LocationsDao locationsDao = new LocationsDao();
-                            locationsDao.updateLocations(locationsList);
-                        } else if (tn.equals("stands")) {
-                            List<Stands> standsList = new ArrayList<Stands>();
-                            JSONArray stands = temp.getJSONArray("content");
-                            for (int j = 0; j < stands.length(); j++) {
-                                JSONObject t = (JSONObject) stands.get(j);
-                                Stands stand = new Stands();
-                                stand.setFid(t.optString("fid"));
-                                stand.setFstand(t.optString("fstand"));
-                                stand.setFterminal(t.optString("fterminal"));
-                                stand.setFgate(t.optString("fgate"));
-                                stand.setFdescription(t.optString("fdescription"));
-                                stand.setFtype(t.optString("ftype"));
-                                standsList.add(stand);
-                            }
-                            StandsDao standsDao = new StandsDao();
-                            standsDao.updateStands(standsList);
+                        switch (tn) {
+                            case "airlines":
+                                List<Airlines> airlineList = new ArrayList<>();
+                                JSONArray airlines = temp.getJSONArray("content");
+                                for (int j = 0; j < airlines.length(); j++) {
+                                    JSONObject t = (JSONObject) airlines.get(j);
+                                    Airlines airline = new Airlines();
+                                    airline.setFid(t.optString("fid"));
+                                    airline.setFiataCode(t.optString("fiataCode"));
+                                    airline.setFicaoCode(t.optString("ficaoCode"));
+                                    airline.setFname(t.optString("fname"));
+                                    airline.setFhandlineAgent(t.optString("fhandlineAgent"));
+                                    airline.setFdescription(t.optString("fdescription"));
+                                    airline.setFpubDspCode(t.optString("fpubDspCode"));
+                                    airlineList.add(airline);
+                                }
+                                AirlinesDao airlinesDao = new AirlinesDao();
+                                airlinesDao.updateAirlines(airlineList);
+                                break;
+                            case "status":
+                                List<FlightStatus> statusList = new ArrayList<>();
+                                JSONArray status = temp.getJSONArray("content");
+                                for (int j = 0; j < status.length(); j++) {
+                                    JSONObject t = (JSONObject) status.get(j);
+                                    FlightStatus flightStatus = new FlightStatus();
+                                    flightStatus.setFid(t.optString("fid"));
+                                    flightStatus.setFstatus(t.optString("fstatus"));
+                                    flightStatus.setFaod(t.optString("faod"));
+                                    flightStatus.setFpriority(t.optInt("fpriority"));
+                                    flightStatus.setFdescription(t.optString("fdescription"));
+                                    statusList.add(flightStatus);
+                                }
+                                FlightStatusDao flightStatusDao = new FlightStatusDao();
+                                flightStatusDao.updateStatuss(statusList);
+                                break;
+                            case "locations":
+                                List<Locations> locationsList = new ArrayList<>();
+                                JSONArray locations = temp.getJSONArray("content");
+                                for (int j = 0; j < locations.length(); j++) {
+                                    JSONObject t = (JSONObject) locations.get(j);
+                                    Locations location = new Locations();
+                                    location.setFid(t.optString("fid"));
+                                    location.setFiataCode(t.optString("fiataCode"));
+                                    location.setFicaoCode(t.optString("ficaoCode"));
+                                    location.setFname(t.optString("fname"));
+                                    location.setFdescription(t.optString("fdescription"));
+                                    location.setFabbc(t.optString("fabbc"));
+                                    location.setFcountrySymbol(t.optString("fcountrySymbol"));
+                                    locationsList.add(location);
+                                }
+                                LocationsDao locationsDao = new LocationsDao();
+                                locationsDao.updateLocations(locationsList);
+                                break;
+                            case "stands":
+                                List<Stands> standsList = new ArrayList<>();
+                                JSONArray stands = temp.getJSONArray("content");
+                                for (int j = 0; j < stands.length(); j++) {
+                                    JSONObject t = (JSONObject) stands.get(j);
+                                    Stands stand = new Stands();
+                                    stand.setFid(t.optString("fid"));
+                                    stand.setFstand(t.optString("fstand"));
+                                    stand.setFterminal(t.optString("fterminal"));
+                                    stand.setFgate(t.optString("fgate"));
+                                    stand.setFdescription(t.optString("fdescription"));
+                                    stand.setFtype(t.optString("ftype"));
+                                    standsList.add(stand);
+                                }
+                                StandsDao standsDao = new StandsDao();
+                                standsDao.updateStands(standsList);
+                                break;
                         }
                     }
                 } catch (JSONException e) {
@@ -151,6 +158,7 @@ public class UpdateUtils {
     /**
      * 请求航班数据
      */
+    @SuppressLint("SimpleDateFormat")
     public static void getTodayData() {
         String url = Constants.URL + "arr/listAll";
         RequestParams params = new RequestParams(url);
@@ -165,7 +173,7 @@ public class UpdateUtils {
                         JSONObject temp = (JSONObject) date.get(i);
                         String tn = temp.optString("tableName");
                         if (tn.equals("arrivals")) {
-                            List<Arrivals> arrivals = new ArrayList<Arrivals>();
+                            List<Arrivals> arrivals = new ArrayList<>();
                             JSONArray dataList = temp.getJSONArray("content");
                             for (int j = 0; j < dataList.length(); j++) {
                                 JSONObject t = (JSONObject) dataList.get(j);
@@ -231,7 +239,7 @@ public class UpdateUtils {
                             ArrivalsDao arrivalsDao = new ArrivalsDao();
                             arrivalsDao.updateArrivals(arrivals);
                         } else if (tn.equals("departures")) {
-                            List<Departures> departures = new ArrayList<Departures>();
+                            List<Departures> departures = new ArrayList<>();
                             JSONArray dataList = temp.getJSONArray("content");
                             for (int j = 0; j < dataList.length(); j++) {
                                 JSONObject t = (JSONObject) dataList.get(j);

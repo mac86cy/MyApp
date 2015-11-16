@@ -12,6 +12,7 @@ import org.xutils.x;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -33,7 +34,7 @@ public class ArrivalsDao {
 
     /**
      * @param fid 根据fid获取该条航班信息
-     * @return
+     * @return 航班
      */
     public Arrivals getArrivalByFid(String fid) {
         Arrivals flight = new Arrivals();
@@ -119,7 +120,7 @@ public class ArrivalsDao {
      * 更新表所有记录
      */
     public void updateArrivals(List<Arrivals> flights) {
-        if (flights.size() > 0 && flights != null) {
+        if (flights != null && flights.size() > 0) {
             clearArrivals();
             addArrivals(flights);
         }
@@ -129,7 +130,7 @@ public class ArrivalsDao {
      * 显示表所有记录
      */
     public List<Arrivals> listArrivals() {
-        List<Arrivals> list = new ArrayList<Arrivals>();
+        List<Arrivals> list = new ArrayList<>();
         try {
             list = db.selector(Arrivals.class).where("fcla", "=", "W/Z")// 客班正班
                     .and("ffst", "=", "J")// 正常旅客服务 配合PAX

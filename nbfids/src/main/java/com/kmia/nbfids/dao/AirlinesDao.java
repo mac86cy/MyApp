@@ -9,6 +9,7 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -31,8 +32,9 @@ public class AirlinesDao {
 
 
     /**
+     *
      * @param iataCode 根据iataCode获得航空公司对象
-     * @return
+     * @return 航空公司
      */
     public Airlines getAirlineByIataCode(String iataCode) {
         Airlines airline = new Airlines();
@@ -63,7 +65,7 @@ public class AirlinesDao {
     /**
      * 增加一条航空公司记录
      *
-     * @param airline
+     * @param airline 增加航空公司
      */
     public void addAirline(Airlines airline) {
         try {
@@ -74,9 +76,7 @@ public class AirlinesDao {
     }
 
     /**
-     * 批量增加航空公司
-     *
-     * @param airlines
+     * @param airlines 批量增加航空公司
      */
     public void addAirlines(List<Airlines> airlines) {
         try {
@@ -122,7 +122,7 @@ public class AirlinesDao {
      * @param airlines 更新airlines所有记录
      */
     public void updateAirlines(List<Airlines> airlines) {
-        if (airlines.size() > 0 && airlines != null) {
+        if (airlines != null && airlines.size() > 0) {
             clearAirlines();
             addAirlines(airlines);
         }
@@ -132,7 +132,7 @@ public class AirlinesDao {
      * @return 显示表所有记录
      */
     public List<Airlines> listAirlines() {
-        List<Airlines> list = new ArrayList<Airlines>();
+        List<Airlines> list = new ArrayList<>();
         try {
             list = db.selector(Airlines.class).findAll();
         } catch (DbException e) {

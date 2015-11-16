@@ -1,5 +1,6 @@
 package com.kmia.nbfids.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -38,34 +39,36 @@ import java.util.List;
 public class ArrivalsAdapter extends BaseAdapter {
     private static int CN_OR_EN = 0; // 中英文标志位
     private LayoutInflater mInflater;
-    private List<Arrivals> list = new ArrayList<Arrivals>();
+    private List<Arrivals> list;
     private LocationsDao locationsDao;// 地名数据源
     private FlightStatusDao statusDao;// 状态数据源
-    private Locations location;// 地名
-    private FlightStatus fstatus;// 状态
     private int screenHeight; // 屏幕高度
 
     public ArrivalsAdapter(Context context) {
         super();
+        list = new ArrayList<>();
         locationsDao = new LocationsDao();
         statusDao = new FlightStatusDao();
         mInflater = LayoutInflater.from(context);
     }
 
     public void init(List<Arrivals> list, int height) {
-        this.list = list;
+        if (this.list != null) {
+            this.list.clear();
+            this.list.addAll(list);
+        } else {
+            this.list = list;
+        }
         this.screenHeight = height;
     }
 
     public void update(List<Arrivals> list, int language) {
         CN_OR_EN = language;
-        this.list = list;
-        notifyDataSetChanged();
-    }
-
-    public void clear() {
         if (this.list != null) {
             this.list.clear();
+            this.list.addAll(list);
+        } else {
+            this.list = list;
         }
         notifyDataSetChanged();
     }
@@ -88,6 +91,7 @@ public class ArrivalsAdapter extends BaseAdapter {
         return position;
     }
 
+    @SuppressLint({"ViewHolder", "InflateParams"})
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         String orgName = "";
@@ -104,8 +108,8 @@ public class ArrivalsAdapter extends BaseAdapter {
         TextView abp = (TextView) convertView.findViewById(R.id.abp);// 前站实际
         TextView status = (TextView) convertView.findViewById(R.id.astatus);// 状态
 
-        fstatus = statusDao.getStatusByCode(ffsa);
-        location = locationsDao.getLocationByIataCode(forg);
+        FlightStatus fstatus = statusDao.getStatusByCode(ffsa);
+        Locations location = locationsDao.getLocationByIataCode(forg);
 
         if (CN_OR_EN != 1) {// 中文
             if (location != null) {

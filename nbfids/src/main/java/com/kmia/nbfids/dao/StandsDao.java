@@ -9,6 +9,7 @@ import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -57,9 +58,7 @@ public class StandsDao {
     }
 
     /**
-     * 增加一条记录
-     *
-     * @param stand
+     * @param stand 增加一条记录
      */
     public void addStand(Stands stand) {
         try {
@@ -70,9 +69,7 @@ public class StandsDao {
     }
 
     /**
-     * 批量增加记录
-     *
-     * @param stand
+     * @param stand 批量增加记录
      */
     public void addStands(List<Stands> stand) {
         try {
@@ -118,7 +115,7 @@ public class StandsDao {
      * @param stands 更新Stand所有记录
      */
     public void updateStands(List<Stands> stands) {
-        if (stands.size() > 0 && stands != null) {
+        if (stands != null && stands.size() > 0) {
             clearStands();
             addStands(stands);
         }
@@ -128,7 +125,7 @@ public class StandsDao {
      * @return 显示表所有记录
      */
     public List<Stands> listStand() {
-        List<Stands> list = new ArrayList<Stands>();
+        List<Stands> list = new ArrayList<>();
         try {
             list = db.selector(Stands.class).findAll();
         } catch (DbException e) {

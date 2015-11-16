@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.kmia.nbfids.R;
 import com.kmia.nbfids.utils.UpdateUtils;
 import com.kmia.nbfids.view.MyImageButton;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -29,15 +30,11 @@ import com.kmia.nbfids.view.MyImageButton;
  *  
  */
 public class MenuActivity extends Activity {
-    private Window window;
 
     private MyImageButton updateBase;
     private MyImageButton updateFlights;
     private MyImageButton changePage;
-    private Intent intent;
     private boolean isArrival;
-    // 自定义ImageButton上面显示的字体的大小
-    private float BTN_TEXTSIZE = 50f;
     // 自定义ImageButton上面显示的字体的颜色
     private int BTN_TEXTCOLOR = Color.rgb(189, 104, 221);
 
@@ -48,7 +45,7 @@ public class MenuActivity extends Activity {
         setContentView(R.layout.menubutton);
         initUi();
 
-        intent = getIntent();
+        Intent intent = getIntent();
         isArrival = intent.getBooleanExtra("isArrival", true);
 
         updateBase.setOnClickListener(new OnClickListener() {
@@ -116,6 +113,7 @@ public class MenuActivity extends Activity {
             changePage.setText("切换进港页面");
         }
         // 显示文字大小
+        float BTN_TEXTSIZE = 50f;
         updateBase.setTextSize(BTN_TEXTSIZE);
         updateFlights.setTextSize(BTN_TEXTSIZE);
         changePage.setTextSize(BTN_TEXTSIZE);
@@ -126,7 +124,7 @@ public class MenuActivity extends Activity {
     }
 
     private void fullScreenDisplay() {
-        window = getWindow();
+        Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
         params.systemUiVisibility = View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY | View.SYSTEM_UI_FLAG_FULLSCREEN
                 | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION; // 全屏显示，不显示虚拟按键
