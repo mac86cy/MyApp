@@ -72,6 +72,8 @@ public class ArrivalsActivity extends Activity {
     private Thread thread;// 子线程，用于循环翻页
     private long exitTime = 0;
 
+    private MyBroadcastReciver receiver;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +82,8 @@ public class ArrivalsActivity extends Activity {
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Constants.ACTION);
-        this.registerReceiver(new MyBroadcastReciver(), intentFilter);
+        receiver = new MyBroadcastReciver();
+        this.registerReceiver(receiver, intentFilter);
 
         initView();// 初始化listview
         timingRefresh();// 定时刷新
@@ -175,7 +178,9 @@ public class ArrivalsActivity extends Activity {
     @Override
     protected void onDestroy() {
         // thread.destroy();//销毁线程
+        this.unregisterReceiver(receiver);
         handler.removeCallbacks(runnable);// 停止定时器
+        //TODO
         Intent intent = new Intent(this, UpdateService.class);
         stopService(intent);
         Log.d("STOPSERVICE", "程序退出，服务停止");

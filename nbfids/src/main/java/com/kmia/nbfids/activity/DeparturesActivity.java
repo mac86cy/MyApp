@@ -69,7 +69,7 @@ public class DeparturesActivity extends Activity {
     private int pageSize = 0;// 页面数量，listsize/rows，如果有余数+1
     private Thread thread;// 子线程，用于循环翻页
     private long exitTime = 0;
-
+    private MyBroadcastReciver receiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +78,8 @@ public class DeparturesActivity extends Activity {
 
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Constants.ACTION);
-        this.registerReceiver(new MyBroadcastReciver(), intentFilter);
+        receiver = new MyBroadcastReciver();
+        this.registerReceiver(receiver, intentFilter);
 
         initView();// 初始化listview
         timingRefresh();// 定时刷新
@@ -173,6 +174,7 @@ public class DeparturesActivity extends Activity {
     @Override
     protected void onDestroy() {
         // thread.destroy();// 销毁线程
+        this.unregisterReceiver(receiver);
         handler.removeCallbacks(runnable);// 停止定时器
         super.onDestroy();
     }
