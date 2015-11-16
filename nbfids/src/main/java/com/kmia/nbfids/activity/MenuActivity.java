@@ -16,9 +16,6 @@ import android.widget.Toast;
 import com.kmia.nbfids.R;
 import com.kmia.nbfids.utils.UpdateUtils;
 import com.kmia.nbfids.view.MyImageButton;
-
-import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.ViewInject;
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -31,14 +28,11 @@ import org.xutils.view.annotation.ViewInject;
  *  * 类说明：menu菜单，用于显示，和响应遥控器menu按键
  *  
  */
-@ContentView(R.layout.menubutton)
 public class MenuActivity extends Activity {
     private Window window;
-    @ViewInject(R.id.update_base)
+
     private MyImageButton updateBase;
-    @ViewInject(R.id.update_flights)
     private MyImageButton updateFlights;
-    @ViewInject(R.id.change_page)
     private MyImageButton changePage;
     private Intent intent;
     private boolean isArrival;
@@ -51,6 +45,7 @@ public class MenuActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fullScreenDisplay();// 全屏显示
+        setContentView(R.layout.menubutton);
         initUi();
 
         intent = getIntent();
@@ -91,6 +86,9 @@ public class MenuActivity extends Activity {
 
 
     private void initUi() {
+        updateBase = (MyImageButton) findViewById(R.id.update_base);
+        updateFlights = (MyImageButton) findViewById(R.id.update_flights);
+        changePage = (MyImageButton) findViewById(R.id.change_page);
         LinearLayout l1 = (LinearLayout) findViewById(R.id.mb1);
         LinearLayout l2 = (LinearLayout) findViewById(R.id.mb2);
         LinearLayout l3 = (LinearLayout) findViewById(R.id.mb3);

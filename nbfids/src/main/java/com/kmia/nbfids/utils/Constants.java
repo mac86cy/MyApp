@@ -12,7 +12,7 @@ package com.kmia.nbfids.utils;
  *  
  */
 public class Constants {
-    public static final String SERVER_IP = "192.168.1.26";// 服务器ip
+    public static final String SERVER_IP = "10.2.18.86";// 服务器ip
     public static final int SERVER_PORT = 8080;// 服务器端口
     public static final String URL = "http://" + SERVER_IP + ":" + SERVER_PORT + "/KMIA_NBFIDS/";// 服务器url
     public static final String ACTION = "com.kmia.message";//消息广播action
