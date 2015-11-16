@@ -54,23 +54,13 @@ public class DeparturesAdapter extends BaseAdapter {
     }
 
     public void init(List<Departures> list, int height) {
-        if (this.list != null) {
-            this.list.clear();
-            this.list.addAll(list);
-        } else {
-            this.list = list;
-        }
+        this.list = list;
         this.screenHeight = height;
     }
 
     public void update(List<Departures> list, int language) {
         CN_OR_EN = language;
-        if (this.list != null) {
-            this.list.clear();
-            this.list.addAll(list);
-        } else {
-            this.list = list;
-        }
+        this.list = list;
         notifyDataSetChanged();
     }
 
@@ -148,4 +138,3 @@ public class DeparturesAdapter extends BaseAdapter {
         return convertView;
     }
 }
-

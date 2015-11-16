@@ -24,6 +24,7 @@ import com.kmia.nbfids.utils.TranslateUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -46,30 +47,20 @@ public class ArrivalsAdapter extends BaseAdapter {
 
     public ArrivalsAdapter(Context context) {
         super();
-        list = new ArrayList<>();
+        this.list = new ArrayList<>();
         locationsDao = new LocationsDao();
         statusDao = new FlightStatusDao();
         mInflater = LayoutInflater.from(context);
     }
 
     public void init(List<Arrivals> list, int height) {
-        if (this.list != null) {
-            this.list.clear();
-            this.list.addAll(list);
-        } else {
-            this.list = list;
-        }
+        this.list = list;
         this.screenHeight = height;
     }
 
     public void update(List<Arrivals> list, int language) {
         CN_OR_EN = language;
-        if (this.list != null) {
-            this.list.clear();
-            this.list.addAll(list);
-        } else {
-            this.list = list;
-        }
+        this.list = list;
         notifyDataSetChanged();
     }
 
