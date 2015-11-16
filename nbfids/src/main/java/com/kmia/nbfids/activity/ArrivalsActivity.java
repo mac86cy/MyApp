@@ -2,7 +2,10 @@ package com.kmia.nbfids.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +25,7 @@ import com.kmia.nbfids.utils.Constants;
 
 import java.util.ArrayList;
 import java.util.List;
+
 /**
  *  * Copyright 2015 KMIA. All rights reserved. 
  *  *
@@ -73,6 +77,10 @@ public class ArrivalsActivity extends Activity {
         super.onCreate(savedInstanceState);
         fullScreenDisplay();// 全屏显示
         setContentView(R.layout.arrivals);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Constants.ACTION);
+        this.registerReceiver(new MyBroadcastReciver(), intentFilter);
 
         initView();// 初始化listview
         timingRefresh();// 定时刷新
@@ -196,4 +204,16 @@ public class ArrivalsActivity extends Activity {
         }
         return super.onKeyDown(keyCode, event);
     }
+
+    private class MyBroadcastReciver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.equals(Constants.ACTION)) {
+                Toast.makeText(ArrivalsActivity.this, "数据更新失败，请检查网络问题", Toast.LENGTH_SHORT).show();
+                //TODO
+            }
+        }
+    }
+
 }

@@ -2,6 +2,7 @@ package com.kmia.nbfids.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import com.kmia.nbfids.dao.AirlinesDao;
@@ -159,7 +160,7 @@ public class UpdateUtils {
      * 请求航班数据
      */
     @SuppressLint("SimpleDateFormat")
-    public static void getTodayData() {
+    public static void getTodayData(final Context context) {
         String url = Constants.URL + "arr/listAll";
         RequestParams params = new RequestParams(url);
         x.http().post(params, new Callback.CommonCallback<String>() {
@@ -313,6 +314,9 @@ public class UpdateUtils {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                Intent intent = new Intent();
+                intent.setAction(Constants.ACTION);
+                context.sendBroadcast(intent);
                 Log.e("GETDATA-ERR", "更新航班数据失败");
             }
 

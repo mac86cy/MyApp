@@ -59,7 +59,7 @@ public class MenuActivity extends Activity {
         updateFlights.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateUtils.getTodayData();// 更新航班数据
+                UpdateUtils.getTodayData(MenuActivity.this);// 更新航班数据
                 Toast.makeText(MenuActivity.this, "航班数据更新中", Toast.LENGTH_SHORT).show();
                 finish();
             }

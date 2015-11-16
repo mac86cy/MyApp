@@ -1,6 +1,7 @@
 package com.kmia.nbfids.utils;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -20,18 +21,22 @@ import java.util.TimerTask;
  *  
  */
 public class UpdateFlightsWork extends TimerTask {
-
+    private Context context;
     @SuppressLint("HandlerLeak")
     Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 9) {
-                UpdateUtils.getTodayData();// 更新航班数据
+                UpdateUtils.getTodayData(context);// 更新航班数据
                 Log.d("SERVICE-WORK", "执行更新航班数据");
             }
         }
     };
+
+    public UpdateFlightsWork(Context context) {
+        this.context = context;
+    }
 
     @Override
     public void run() {
