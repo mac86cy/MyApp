@@ -136,11 +136,12 @@ public class UpdateUtils {
                     e.printStackTrace();
                 }
                 util.setisFirst(false);// 设置第一次登陆为false
+                Log.d("UPDATE-SUCCEED", "更新基础数据成功");
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("GETDATA-ERR", "更新基础数据失败");
+                Log.e("UPDATED-FAILED", "更新基础数据失败");
             }
 
             @Override
@@ -310,6 +311,7 @@ public class UpdateUtils {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+                Log.d("UPDATE-SUCCEED","更新航班数据成功");
             }
 
             @Override
@@ -317,7 +319,7 @@ public class UpdateUtils {
                 Intent intent = new Intent();
                 intent.setAction(Constants.ACTION);
                 context.sendBroadcast(intent);
-                Log.e("GETDATA-ERR", "更新航班数据失败");
+                Log.e("UPDATE-FAILED", "更新航班数据失败");
             }
 
             @Override

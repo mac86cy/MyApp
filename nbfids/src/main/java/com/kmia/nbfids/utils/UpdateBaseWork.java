@@ -32,7 +32,7 @@ public class UpdateBaseWork extends TimerTask {
                 if (util.getisFirst()) {// 第一次开启，请求基础数据
                     UpdateUtils.getBaseAll(context);// 更新基础数据
                 }
-                Log.d("SERVICE-WORK", "执行更新基础数据");
+                Log.d("UPDATE-START", "开始更新基础数据");
             }
         }
     };

@@ -29,7 +29,7 @@ public class UpdateFlightsWork extends TimerTask {
             super.handleMessage(msg);
             if (msg.what == 9) {
                 UpdateUtils.getTodayData(context);// 更新航班数据
-                Log.d("SERVICE-WORK", "执行更新航班数据");
+                Log.d("UPDATE-START", "开始更新航班数据");
             }
         }
     };

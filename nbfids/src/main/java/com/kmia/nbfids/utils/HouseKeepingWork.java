@@ -33,7 +33,7 @@ public class HouseKeepingWork extends TimerTask {
             if (msg.what == 7) {
                 arrivalsDao.HouseKeeping();
                 departuresDao.HouseKeeping();
-                Log.d("SERVICE-WORK", "执行清理数据");
+                Log.d("HOUSEKEEP-START", "开始清理历史数据");
             }
         }
     };
