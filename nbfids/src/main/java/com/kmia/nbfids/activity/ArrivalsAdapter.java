@@ -47,7 +47,9 @@ public class ArrivalsAdapter extends BaseAdapter {
 
     public ArrivalsAdapter(Context context, List<Arrivals> list, int height) {
         super();
-        this.list = list;
+        if (list != null) {
+            this.list = list;
+        }
         locationsDao = new LocationsDao();
         statusDao = new FlightStatusDao();
         mInflater = LayoutInflater.from(context);
@@ -56,7 +58,8 @@ public class ArrivalsAdapter extends BaseAdapter {
 
     public void update(List<Arrivals> list, int language) {
         CN_OR_EN = language;
-        this.list = list;
+        this.list.clear();
+        this.list.addAll(list);
         notifyDataSetChanged();
     }
 

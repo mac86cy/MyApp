@@ -47,7 +47,9 @@ public class DeparturesAdapter extends BaseAdapter {
 
     public DeparturesAdapter(Context context, List<Departures> list, int height) {
         super();
-        this.list = list;
+        if (list != null) {
+            this.list = list;
+        }
         this.screenHeight = height;
         locationsDao = new LocationsDao();
         statusDao = new FlightStatusDao();
@@ -56,7 +58,8 @@ public class DeparturesAdapter extends BaseAdapter {
 
     public void update(List<Departures> list, int language) {
         CN_OR_EN = language;
-        this.list = list;
+        this.list.clear();
+        this.list.addAll(list);
         notifyDataSetChanged();
     }
 
