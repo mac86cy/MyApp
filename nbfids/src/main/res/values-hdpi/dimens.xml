@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="itemTextSize">30sp</dimen>
+    <dimen name="titleTextSize">28sp</dimen>
+    <dimen name="itemTextSize">28sp</dimen>
     <dimen name="infoTextSize">25sp</dimen>
 </resources>
