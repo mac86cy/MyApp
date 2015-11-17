@@ -1,15 +1,23 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'kmia'
+            keyPassword '19860801'
+            storeFile file('F:/Android/Export/Android.keystore')
+            storePassword '19860801'
+        }
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.2"
-
     defaultConfig {
         applicationId "com.kmia.nbfids"
         minSdkVersion 19
         targetSdkVersion 23
         versionCode 1
         versionName "1.1"
+        signingConfig signingConfigs.config
     }
     buildTypes {
         release {
@@ -20,6 +28,8 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
+    }
+    productFlavors {
     }
 }
 

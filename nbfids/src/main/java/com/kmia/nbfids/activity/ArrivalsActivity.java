@@ -10,7 +10,6 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -23,7 +22,6 @@ import com.kmia.nbfids.dao.ArrivalsDao;
 import com.kmia.nbfids.model.Arrivals;
 import com.kmia.nbfids.utils.Constants;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -39,8 +37,17 @@ import java.util.List;
  *  
  */
 public class ArrivalsActivity extends Activity {
-
     public static ArrivalsActivity instance = null;
+    private ArrivalsDao dao;// 数据接口
+    private Handler handler;
+    private Runnable runnable;
+    private List<Arrivals> list;// 每次从数据接口取来的list，即N小时内的航班
+    private List<Arrivals> subList;// list的子list，用于将list切割为每页所显示的数据
+    private int listSize;// list的大小，list.size()
+    private int pageSize;// 页面数量，listsize/rows，如果有余数+1
+    private Thread thread;// 子线程，用于循环翻页
+    private long exitTime = 0;
+    private MyBroadcastReciver receiver;
     private ArrivalsAdapter adapter;// 数据适配器，用于填充数据
     /**
      * 主UI线程代理，用来监听msg，获取消息更新主线程UI
@@ -62,32 +69,23 @@ public class ArrivalsActivity extends Activity {
             }
         }
     };
-    private ArrivalsDao dao;// 数据接口
-    private Handler handler;
-    private Runnable runnable;
-    private List<Arrivals> list = new ArrayList<>();// 每次从数据接口取来的list，即N小时内的航班
-    private List<Arrivals> subList = new ArrayList<>();// list的子list，用于将list切割为每页所显示的数据
-    private int listSize = 0;// list的大小，list.size()
-    private int pageSize = 0;// 页面数量，listsize/rows，如果有余数+1
-    private Thread thread;// 子线程，用于循环翻页
-    private long exitTime = 0;
-
-    private MyBroadcastReciver receiver;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fullScreenDisplay();// 全屏显示
         setContentView(R.layout.arrivals);
+        registerReciver();//注册广播接受者
+        initView();// 初始化listview和数据
+        timingRefresh();// 定时刷新
+        instance = this;
+    }
 
+    private void registerReciver() {
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction(Constants.ACTION);
         receiver = new MyBroadcastReciver();
         this.registerReceiver(receiver, intentFilter);
-
-        initView();// 初始化listview
-        timingRefresh();// 定时刷新
-        instance = this;
     }
 
     /**
@@ -101,34 +99,32 @@ public class ArrivalsActivity extends Activity {
                 list = dao.listArrivals();
                 if (list != null) {
                     listSize = list.size();
-                } else {
-                    listSize = 0;
-                }
-                pageSize = listSize % Constants.ROWS == 0 ? listSize / Constants.ROWS : listSize / Constants.ROWS + 1;// 取余，余数不为零+1页
-                thread = new Thread() {
-                    @Override
-                    public void run() {
-                        for (int i = 1; i <= pageSize; i++) {// 根据分页，进行循环
-                            if (i != pageSize) {// 不为最后一页就从rows*(n-1)到rows*n
-                                subList = list.subList((i - 1) * Constants.ROWS, i * Constants.ROWS);
-                            } else {// 最后一页的sublist结束index为最后一个
-                                subList = list.subList((i - 1) * Constants.ROWS, listSize);
-                            }
-                            try {
-                                for (int j = 0; j < 2; j++) {// 中英文翻页循环，0为中文，1为英文
-                                    Message msg = new Message();// 创建消息
-                                    msg.obj = subList;// 消息体，用来通知UI主线程更新的list
-                                    msg.arg1 = j;// 中英文标志位
-                                    mHandler.sendMessage(msg);
-                                    Thread.sleep(Constants.INTERVAL * 1000);// 每页显示时长
+                    pageSize = listSize % Constants.ROWS == 0 ? listSize / Constants.ROWS : listSize / Constants.ROWS + 1;// 取余，余数不为零+1页
+                    thread = new Thread() {
+                        @Override
+                        public void run() {
+                            for (int i = 1; i <= pageSize; i++) {// 根据分页，进行循环
+                                if (i != pageSize) {// 不为最后一页就从rows*(n-1)到rows*n
+                                    subList = list.subList((i - 1) * Constants.ROWS, i * Constants.ROWS);
+                                } else {// 最后一页的sublist结束index为最后一个
+                                    subList = list.subList((i - 1) * Constants.ROWS, listSize);
                                 }
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                                try {
+                                    for (int j = 0; j < 2; j++) {// 中英文翻页循环，0为中文，1为英文
+                                        Message msg = new Message();// 创建消息
+                                        msg.obj = subList;// 消息体，用来通知UI主线程更新的list
+                                        msg.arg1 = j;// 中英文标志位
+                                        mHandler.sendMessage(msg);
+                                        Thread.sleep(Constants.INTERVAL * 1000);// 每页显示时长
+                                    }
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
-                    }
-                };
-                thread.start();// 开始线程
+                    };
+                    thread.start();// 开始线程
+                }
                 handler.postDelayed(this, 2 * pageSize * Constants.INTERVAL * 1000);
             }
         };
@@ -151,12 +147,8 @@ public class ArrivalsActivity extends Activity {
      * @return height
      */
     private int getScreenHeight() {
-        int height = getResources().getDisplayMetrics().heightPixels;
         Resources resources = this.getResources();
-        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
-        int barHeight = resources.getDimensionPixelSize(resourceId);// 获取NavigationBar的高度
-        height += barHeight;// 获取全部屏幕高度，导航栏+标题栏+状态栏
-        return height;
+        return getResources().getDisplayMetrics().heightPixels + resources.getDimensionPixelSize(resources.getIdentifier("navigation_bar_height", "dimen", "android"));
     }
 
     /**
@@ -177,13 +169,10 @@ public class ArrivalsActivity extends Activity {
      */
     @Override
     protected void onDestroy() {
-        // thread.destroy();//销毁线程
         this.unregisterReceiver(receiver);
         handler.removeCallbacks(runnable);// 停止定时器
-        //TODO
         Intent intent = new Intent(this, UpdateService.class);
         stopService(intent);
-        Log.d("STOPSERVICE", "程序退出，服务停止");
         super.onDestroy();
     }
 
@@ -201,6 +190,8 @@ public class ArrivalsActivity extends Activity {
                 Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
                 exitTime = System.currentTimeMillis();
             } else {
+                Intent intent = new Intent(this, UpdateService.class);
+                stopService(intent);
                 finish();
                 System.exit(0);
             }
@@ -215,9 +206,8 @@ public class ArrivalsActivity extends Activity {
             String action = intent.getAction();
             if (action.equals(Constants.ACTION)) {
                 Toast.makeText(ArrivalsActivity.this, "数据更新失败，请检查网络问题", Toast.LENGTH_SHORT).show();
-                //TODO
+                //TODO 数据更新失败有什么提示
             }
         }
     }
-
 }

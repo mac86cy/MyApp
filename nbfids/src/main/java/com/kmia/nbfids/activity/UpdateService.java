@@ -3,6 +3,7 @@ package com.kmia.nbfids.activity;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.util.Log;
 
 import com.kmia.nbfids.utils.HouseKeepingWork;
 import com.kmia.nbfids.utils.UpdateBaseWork;
@@ -40,6 +41,13 @@ public class UpdateService extends Service {
     @SuppressWarnings("deprecation")
     @Override
     public void onStart(Intent intent, int startId) {
+        Log.d("UPDATE-SERVICE", "更新服务开启");
         super.onStart(intent, startId);
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d("UPDATE-SERVICE", "更新服务退出");
+        super.onDestroy();
     }
 }

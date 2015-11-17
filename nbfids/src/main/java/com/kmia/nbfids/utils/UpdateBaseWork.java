@@ -31,8 +31,8 @@ public class UpdateBaseWork extends TimerTask {
             if (msg.what == 8) {
                 if (util.getisFirst()) {// 第一次开启，请求基础数据
                     UpdateUtils.getBaseAll(context);// 更新基础数据
+                    Log.d("UPDATE-START", "开始更新基础数据");
                 }
-                Log.d("UPDATE-START", "开始更新基础数据");
             }
         }
     };
