@@ -390,7 +390,6 @@ public class UpdateUtils {
             PackageInfo pInfo = ctx.getPackageManager().getPackageInfo(
                     ctx.getPackageName(), 0);
             curVersionCode = pInfo.versionCode;//用于更新比较的，int类型
-
         } catch (Exception e) {
             Log.e("update", e.getMessage());
         }

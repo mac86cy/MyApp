@@ -29,7 +29,6 @@ public class UpdateSoftware extends TimerTask {
             }
         }
     };
-
     public UpdateSoftware(Context context) {
         super();
         this.context = context;
