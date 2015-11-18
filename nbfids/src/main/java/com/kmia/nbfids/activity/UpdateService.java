@@ -8,6 +8,7 @@ import android.util.Log;
 import com.kmia.nbfids.utils.HouseKeepingWork;
 import com.kmia.nbfids.utils.UpdateBaseWork;
 import com.kmia.nbfids.utils.UpdateFlightsWork;
+import com.kmia.nbfids.utils.UpdateSoftware;
 
 import java.util.Timer;
 
@@ -36,6 +37,7 @@ public class UpdateService extends Service {
         timer.schedule(new UpdateBaseWork(this), 0, 24 * 60 * 60 * 1000);// 更新基础数据，每天
         timer.schedule(new UpdateFlightsWork(this), 0, 60 * 1000);// 更新航班动态数据,每分钟
         timer.schedule(new HouseKeepingWork(), 0, 24 * 60 * 60 * 1000); // 清理历史航班数据，每天
+        timer.schedule(new UpdateSoftware(this), 0, 30 * 1000); //
     }
 
     @SuppressWarnings("deprecation")

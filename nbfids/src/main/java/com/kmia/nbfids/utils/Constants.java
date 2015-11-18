@@ -15,7 +15,8 @@ public class Constants {
     public static final String SERVER_IP = "10.2.18.86";// 服务器ip
     public static final int SERVER_PORT = 8080;// 服务器端口
     public static final String URL = "http://" + SERVER_IP + ":" + SERVER_PORT + "/KMIA_NBFIDS/";// 服务器url
-    public static final String ACTION = "com.kmia.message.error";//消息广播action
+    public static final String NETWORK_ERROR_ACTION = "com.kmia.message.error";//消息广播action
+    public static final String SOFTWARE_UPDATE_ACTION = "com.kmia.message.update";//消息广播action
     public static final String SAVE_USER = "saveUserInfos";//保存用户信息的xml文件名
     public static final String DBNAME = "nbfids.db";//数据库名称
     public static final int ROWS = 10; // 每页显示行数
