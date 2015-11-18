@@ -1,1 +1,1 @@
-include ':nbfids', ':xutils-3.0-sources'
+include ':nbfids'
