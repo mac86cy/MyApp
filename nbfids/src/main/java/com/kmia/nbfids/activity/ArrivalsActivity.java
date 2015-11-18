@@ -2,11 +2,14 @@ package com.kmia.nbfids.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.Resources;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -39,6 +42,7 @@ import java.util.List;
  */
 public class ArrivalsActivity extends Activity {
     public static ArrivalsActivity instance = null;
+    private static int isOpen = 0;
     private ArrivalsDao dao;// 数据接口
     private Handler handler;
     private Runnable runnable;
@@ -202,17 +206,49 @@ public class ArrivalsActivity extends Activity {
         return super.onKeyDown(keyCode, event);
     }
 
+    protected void dialog(String msg, final String path) {
+        isOpen = 1;
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage(msg);
+        builder.setTitle("发现新版本");
+        builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                isOpen = 0;
+                dialog.dismiss();
+                Uri uri = Uri.parse(path);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                isOpen = 0;
+                dialog.dismiss();
+            }
+        });
+        builder.create().show();
+
+    }
+
     private class MyBroadcastReciver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(Constants.NETWORK_ERROR_ACTION)) {
+            if (action.equals(Constants.NETWORK_ERROR_ACTION)) {//数据更新失败
                 Toast.makeText(ArrivalsActivity.this, "数据更新失败，请检查网络问题", Toast.LENGTH_SHORT).show();
                 //TODO 数据更新失败有什么提示
-            } else if (action.equals(Constants.SOFTWARE_UPDATE_ACTION)) {
+            } else if (action.equals(Constants.SOFTWARE_UPDATE_ACTION)) {//软件新版本升级
                 Bundle bundle = intent.getExtras();
                 String des = bundle.getString("des");
                 String path = bundle.getString("path");
+
+                if (des != null && !des.isEmpty() && path != null && !path.isEmpty()) {
+                    if (isOpen == 0) {
+                        dialog(des, path);
+                    }
+                }
                 Log.d("收到广播更新软件", "des:" + des + "path:" + path);
             }
         }
