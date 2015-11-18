@@ -10,6 +10,7 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -83,7 +84,8 @@ public class ArrivalsActivity extends Activity {
 
     private void registerReciver() {
         IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction(Constants.ACTION);
+        intentFilter.addAction(Constants.SOFTWARE_UPDATE_ACTION);
+        intentFilter.addAction(Constants.NETWORK_ERROR_ACTION);
         receiver = new MyBroadcastReciver();
         this.registerReceiver(receiver, intentFilter);
     }
@@ -204,9 +206,14 @@ public class ArrivalsActivity extends Activity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if (action.equals(Constants.ACTION)) {
+            if (action.equals(Constants.NETWORK_ERROR_ACTION)) {
                 Toast.makeText(ArrivalsActivity.this, "数据更新失败，请检查网络问题", Toast.LENGTH_SHORT).show();
                 //TODO 数据更新失败有什么提示
+            } else if (action.equals(Constants.SOFTWARE_UPDATE_ACTION)) {
+                Bundle bundle = intent.getExtras();
+                String des = bundle.getString("des");
+                String path = bundle.getString("path");
+                Log.d("收到广播更新软件", "des:" + des + "path:" + path);
             }
         }
     }
