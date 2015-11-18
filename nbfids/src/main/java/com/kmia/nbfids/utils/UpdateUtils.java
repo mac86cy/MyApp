@@ -3,6 +3,7 @@ package com.kmia.nbfids.utils;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.util.Log;
 
 import com.kmia.nbfids.dao.AirlinesDao;
@@ -311,13 +312,13 @@ public class UpdateUtils {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d("UPDATE-SUCCEED","更新航班数据成功");
+                Log.d("UPDATE-SUCCEED", "更新航班数据成功");
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 Intent intent = new Intent();
-                intent.setAction(Constants.ACTION);
+                intent.setAction(Constants.NETWORK_ERROR_ACTION);
                 context.sendBroadcast(intent);
                 Log.e("UPDATE-FAILED", "更新航班数据失败");
             }
@@ -332,7 +333,68 @@ public class UpdateUtils {
 
             }
         });
+    }
 
+    public static void getVersion(final Context context) {
+        String url = Constants.URL + "software/update";
+        RequestParams params = new RequestParams(url);
+        x.http().post(params, new Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                try {
+                    JSONArray data = new JSONArray(result);
+                    if (data.length() > 0) {
+                        JSONObject ver = (JSONObject) data.get(0);
+                        int version = ver.optInt("version");
+                        String des = ver.optString("des");
+                        String path = ver.optString("path");
+                        if (version > getCurVersion(context)) {
+                            Intent intent = new Intent();
+                            intent.putExtra("des", des);
+                            intent.putExtra("path", path);
+                            intent.setAction(Constants.SOFTWARE_UPDATE_ACTION);
+                            context.sendBroadcast(intent);
+                        }
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e("UPDATED-FAILED", "软件检查更新失败");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
 
     }
+
+    /**
+     * @param ctx 上下文引用
+     * @return 返回版本号int
+     */
+    public static int getCurVersion(Context ctx) {
+        int curVersionCode = 0;
+        try {
+            PackageInfo pInfo = ctx.getPackageManager().getPackageInfo(
+                    ctx.getPackageName(), 0);
+            curVersionCode = pInfo.versionCode;//用于更新比较的，int类型
+
+        } catch (Exception e) {
+            Log.e("update", e.getMessage());
+        }
+        return curVersionCode;
+    }
+
 }
